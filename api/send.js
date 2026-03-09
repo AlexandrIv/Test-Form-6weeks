@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
     `To: ${process.env.GMAIL_TO}`,
     `From: ${process.env.GMAIL_TO}`,
     `Reply-To: ${email}`,
-    `Subject: 6weeks - Form submitted`,
+    `Subject: 6weeks - Форма заповнена`,
     `MIME-Version: 1.0`,
     `Content-Type: text/plain; charset=utf-8`,
     ``,
