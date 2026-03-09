@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital@0;1&display=swap"
+          rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f2ee;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .page {
+            display: flex;
+            width: 100%;
+        }
+
+        .page__hero {
+            flex: 1;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .page__hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .page__hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, .6) 0%, rgba(0, 0, 0, .2) 60%);
+        }
+
+        .page__hero-text {
+            position: absolute;
+            bottom: 52px;
+            left: 48px;
+            right: 48px;
+            color: #fff;
+        }
+
+        .page__hero-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+
+        .page__hero-text h2 em {
+            font-style: italic;
+            opacity: .75;
+        }
+
+        .page__hero-text p {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: .65;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        .page__form {
+            width: 480px;
+            flex-shrink: 0;
+            background: #fff;
+            padding: 72px 52px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .page__form h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .page__form > p {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 7px;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #e8e4df;
+            border-radius: 8px;
+            background: #f9f7f5;
+            font-family: inherit;
+            font-size: 14px;
+            color: #1a1a1a;
+            outline: none;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: #c2713a;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(194, 113, 58, .1);
+        }
+
+        .field input.is-error {
+            border-color: #e05c5c;
+        }
+
+        .field textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .field__error {
+            display: none;
+            font-size: 12px;
+            color: #e05c5c;
+            margin-top: 5px;
+        }
+
+        .field__error.is-visible {
+            display: block;
+        }
+
+        .form-footer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .form-footer button {
+            padding: 12px 28px;
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+        .form-footer button:hover {
+            background: #333;
+        }
+
+        .form-footer button:disabled {
+            background: #bbb;
+            cursor: default;
+        }
+
+        .form-footer__status {
+            font-size: 13px;
+            display: none;
+        }
+
+        .form-footer__status.ok {
+            display: block;
+            color: #2d8a4e;
+        }
+
+        .form-footer__status.err {
+            display: block;
+            color: #e05c5c;
+        }
+
+        @media (max-width: 900px) {
+            .page {
+                flex-direction: column;
+            }
+
+            .page__hero {
+                position: relative;
+                height: 280px;
+            }
+
+            .page__form {
+                width: 100%;
+                padding: 48px 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="page__hero">
+        <img src="https://images.unsplash.com/photo-1517497713463-f4a339ccd25a?q=80&w=766&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+             alt="">
+        <div class="page__hero-overlay"></div>
+        <div class="page__hero-text">
+            <h2>Have an idea?<br>Let's <em>talk about it</em></h2>
+            <p>We read every message and reply within one business day.</p>
+        </div>
+    </div>
+
+    <div class="page__form">
+        <h1>Get in touch</h1>
+        <p>Fill out the form and we'll get back to you.</p>
+
+        <form id="form" novalidate>
+            <div class="field">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="John Smith">
+            </div>
+
+            <div class="field">
+                <label for="email">Email *</label>
+                <input type="email" id="email" placeholder="you@example.com">
+                <span class="field__error" id="email-err">Please enter a valid email</span>
+            </div>
+
+            <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Tell us about your project..."></textarea>
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" id="btn">Send message</button>
+                <span class="form-footer__status" id="status"></span>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script>
+function validEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
+document.getElementById('form').addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const emailEl = document.getElementById('email');
+    const emailErr = document.getElementById('email-err');
+    const btn = document.getElementById('btn');
+    const status = document.getElementById('status');
+
+    if (!validEmail(email)) {
+        emailEl.classList.add('is-error');
+        emailErr.classList.add('is-visible');
+        return;
+    } else {
+        emailEl.classList.remove('is-error');
+        emailErr.classList.remove('is-visible');
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    status.className = 'form-footer__status';
+
+    try {
+        const res = await fetch('/api/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, message })
+        });
+
+        if (!res.ok) throw new Error((await res.json()).error || 'Something went wrong.');
+
+        status.textContent = 'Message sent!';
+        status.className = 'form-footer__status ok';
+        e.target.reset();
+    } catch (err) {
+        status.textContent = err.message;
+        status.className = 'form-footer__status err';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send message';
+    }
+});
+
+document.getElementById('email').addEventListener('input', function () {
+    if (validEmail(this.value)) {
+        this.classList.remove('is-error');
+        document.getElementById('email-err').classList.remove('is-visible');
+    }
+});
+</script>
+</body>
+</html>
