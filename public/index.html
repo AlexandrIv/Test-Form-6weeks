@@ -258,61 +258,57 @@
 </div>
 
 <script>
-function validEmail(v) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-}
+    document.getElementById('form').addEventListener('submit', async e => {
+        e.preventDefault();
 
-document.getElementById('form').addEventListener('submit', async e => {
-    e.preventDefault();
+        const name    = document.getElementById('name').value.trim();
+        const email   = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const emailEl  = document.getElementById('email');
+        const emailErr = document.getElementById('email-err');
+        const btn      = document.getElementById('btn');
+        const status   = document.getElementById('status');
 
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const emailEl = document.getElementById('email');
-    const emailErr = document.getElementById('email-err');
-    const btn = document.getElementById('btn');
-    const status = document.getElementById('status');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            emailEl.classList.add('is-error');
+            emailErr.classList.add('is-visible');
+            return;
+        }
 
-    if (!validEmail(email)) {
-        emailEl.classList.add('is-error');
-        emailErr.classList.add('is-visible');
-        return;
-    } else {
         emailEl.classList.remove('is-error');
         emailErr.classList.remove('is-visible');
-    }
 
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    status.className = 'form-footer__status';
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        status.className = 'form-footer__status';
 
-    try {
-        const res = await fetch('/api/send', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, message })
-        });
+        try {
+            const res = await fetch('/api/send', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, message })
+            });
 
-        if (!res.ok) throw new Error((await res.json()).error || 'Something went wrong.');
+            if (!res.ok) throw new Error((await res.json()).error);
 
-        status.textContent = 'Message sent!';
-        status.className = 'form-footer__status ok';
-        e.target.reset();
-    } catch (err) {
-        status.textContent = err.message;
-        status.className = 'form-footer__status err';
-    } finally {
-        btn.disabled = false;
-        btn.textContent = 'Send message';
-    }
-});
+            status.textContent = 'Message sent!';
+            status.className = 'form-footer__status ok';
+            e.target.reset();
+        } catch(err) {
+            status.textContent = err.message || 'Something went wrong.';
+            status.className = 'form-footer__status err';
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Send message';
+        }
+    });
 
-document.getElementById('email').addEventListener('input', function () {
-    if (validEmail(this.value)) {
-        this.classList.remove('is-error');
-        document.getElementById('email-err').classList.remove('is-visible');
-    }
-});
+    document.getElementById('email').addEventListener('input', function() {
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
+            this.classList.remove('is-error');
+            document.getElementById('email-err').classList.remove('is-visible');
+        }
+    });
 </script>
 </body>
 </html>
