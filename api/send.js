@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,25 +14,36 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'Invalid email' });
   }
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      type: 'OAuth2',
-      user: process.env.GMAIL_TO,
-      clientId: process.env.GMAIL_CLIENT_ID,
-      clientSecret: process.env.GMAIL_CLIENT_SECRET,
-      refreshToken: process.env.GMAIL_REFRESH_TOKEN,
-    },
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GMAIL_CLIENT_ID,
+    process.env.GMAIL_CLIENT_SECRET,
+    'https://developers.google.com/oauthplayground'
+  );
+
+  oauth2Client.setCredentials({
+    refresh_token: process.env.GMAIL_REFRESH_TOKEN,
   });
 
-  await transporter.sendMail({
-    from: process.env.GMAIL_TO,
-    to: process.env.GMAIL_TO,
-    replyTo: email,
-    subject: '6weeks - Form submitted',
-    text: `Name: ${name || 'n/a'}\nEmail: ${email}\nMessage:\n${message || 'n/a'}`,
+  const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
+
+  const body = `Name: ${name || 'n/a'}\nEmail: ${email}\nMessage:\n${message || 'n/a'}`;
+
+  const mime = [
+    `To: ${process.env.GMAIL_TO}`,
+    `From: ${process.env.GMAIL_TO}`,
+    `Reply-To: ${email}`,
+    `Subject: 6weeks - Form submitted`,
+    `MIME-Version: 1.0`,
+    `Content-Type: text/plain; charset=utf-8`,
+    ``,
+    body,
+  ].join('\n');
+
+  const encoded = Buffer.from(mime).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+  await gmail.users.messages.send({
+    userId: 'me',
+    requestBody: { raw: encoded },
   });
 
   return res.status(200).json({ ok: true });
